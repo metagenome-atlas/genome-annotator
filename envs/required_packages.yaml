@@ -1,0 +1,6 @@
+channels:
+    - defaults
+    - conda-forge
+    - bioconda
+dependencies:
+    - prodigal=2.6.3
