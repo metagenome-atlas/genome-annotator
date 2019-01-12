@@ -1,4 +1,4 @@
-# Snakemake workflow: Fast Genome Annotator
+# Genome Annotator
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥5-brightgreen.svg)](https://snakemake.bitbucket.io)
 
@@ -37,4 +37,3 @@ or
     snakemake --drmaa --jobs 100
 
 See the [Snakemake documentation](https://snakemake.readthedocs.io) for further details.
- 
