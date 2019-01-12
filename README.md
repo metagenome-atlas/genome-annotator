@@ -8,7 +8,7 @@ This workflow is designed to annotate the genes a set of genomes (nucleotide fas
 
 * Silas Kieser (@silask)
 
-##Dependencies
+## Dependencies
 
 For now, InterProScan v5 and [genomeProperties](https://genome-properties.readthedocs.io/en/latest/calculating.html#local-analysis-method) should be installed. In future this installation will be automated.
 
