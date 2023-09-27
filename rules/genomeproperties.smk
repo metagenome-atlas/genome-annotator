@@ -66,39 +66,18 @@ if config['function_predicton']=='interproscan':
 
 rule genomeproperties:
     input:
-        inut_genome_properties
+        genprop_flat_file=genprop_flat_file,
+        interpro=expand("annotations/interproscan/{genome}.tsv",genome=GENOMES)
     output:
-        expand("annotations/genomeproperties/{outfiles}_{{genome}}",
-               outfiles=config['genomeproperties']['outputformats'].values() ),
-    params:
-        outfiles= ' '.join([f"-outfiles {f}" for f in
-                            config['genomeproperties']['outputformats'].keys() ]),
-        gpdir='~/Documents/GitHub/genome-properties/flatfiles',
-        out_dir= lambda wc, output: os.path.dirname(output[0])
+        "annotations/GenomeProperties.tsv",
     conda:
         "envs/genomeproperties.yaml"
     threads:
         1
-    shell:
-        "assign_genome_properties.pl -matches {input} -all  -name {wildcards.genome} -outdir {params.out_dir} "
-        "-gpdir {params.gpdir} -gpff genomeProperties.txt {params.outfiles}"
+    script:
+        "../scripts/assign_genome_properties.py"
 
-localrules: combine_genome_properties
-rule combine_genome_properties:
-    input:
-        expand("annotations/genomeproperties/SUMMARY_FILE_{genome}",genome=GENOMES),
-    output:
-        "annotations/Combined_genomeproperties.tsv"
-    run:
-        import pandas as pd
-        G={}
-        for i,genome in enumerate(GENOMES):
-            G[genome] = pd.read_table(input[i],index_col=[0,1],squeeze=True,header=None)
 
-        G= pd.DataFrame(G).replace({'NO':0,'PARTIAL':0.5,'YES':1})
-
-        G.index.names= ['ID','Description']
-        G.to_csv(output[0],sep='\t')
 
 
 
